@@ -1,0 +1,80 @@
+﻿@model CRUDWithDapper.Models.Student
+
+@{
+    ViewBag.Title = "UpdateStudent";
+}
+
+<h2>Edit the Student Details</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @* <h4>Student</h4>*@
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.StudentId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StudName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StudName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StudName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StudAge, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StudAge, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StudAge, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StudEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StudEmail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StudEmail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StudDepartment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StudDepartment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StudDepartment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Skills", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var skill in new List<string> { "C#", "Java", "Python", "JavaScript", "SQL" })
+                {
+                    var isChecked = Model.SelectedSkills != null && Model.SelectedSkills.Contains(skill);
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="SelectedSkills" value="@skill" @(isChecked ? "checked" : "") /> @skill
+                    </label>
+                }
+                @Html.ValidationMessageFor(model => model.Skills, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-info mt-3" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "GetAllStudent", null, new { @class = "btn btn-primary mt-2" })
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
